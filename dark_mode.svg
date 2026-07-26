@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1049" height="572" viewBox="0 0 1049 572" font-family="ConsolasFallback,Consolas,monospace" font-size="13">
+<style>@font-face {src: local('Consolas'), local('Consolas Bold');font-family: 'ConsolasFallback';font-display: swap;-webkit-size-adjust: 109%;size-adjust: 109%;}</style>
+<rect x="0" y="0" width="1049" height="572" fill="#0d1117"/>
+<line x1="330.2" y1="14" x2="330.2" y2="558" stroke="#616e7f" stroke-width="1"/>
+<text x="24" y="26" font-size="9" fill="#c9d1d9" xml:space="preserve">            XXXX</text>
+<text x="24" y="38" font-size="9" fill="#c9d1d9" xml:space="preserve">           X    XX</text>
+<text x="24" y="50" font-size="9" fill="#c9d1d9" xml:space="preserve">          X  ***  X                XXXXX</text>
+<text x="24" y="62" font-size="9" fill="#c9d1d9" xml:space="preserve">         X  *****  X            XXX     XX</text>
+<text x="24" y="74" font-size="9" fill="#c9d1d9" xml:space="preserve">      XXXX ******* XXX      XXXX          XX</text>
+<text x="24" y="86" font-size="9" fill="#c9d1d9" xml:space="preserve">    XX   X ******  XXXXXXXXX                XX XXX</text>
+<text x="24" y="98" font-size="9" fill="#c9d1d9" xml:space="preserve">  XX      X ****  X                           X** X</text>
+<text x="24" y="110" font-size="9" fill="#c9d1d9" xml:space="preserve"> X        XX    XX     X                      X***X</text>
+<text x="24" y="122" font-size="9" fill="#c9d1d9" xml:space="preserve">X         //XXXX       X                      XXXX</text>
+<text x="24" y="134" font-size="9" fill="#c9d1d9" xml:space="preserve">X         //   X                             XX</text>
+<text x="24" y="146" font-size="9" fill="#c9d1d9" xml:space="preserve">X         //    X          XXXXXXXXXXXXXXXXXX/</text>
+<text x="24" y="158" font-size="9" fill="#c9d1d9" xml:space="preserve">X     XXX//    X          X</text>
+<text x="24" y="170" font-size="9" fill="#c9d1d9" xml:space="preserve">X    X   X     X         X</text>
+<text x="24" y="182" font-size="9" fill="#c9d1d9" xml:space="preserve">X    X    X    X        X</text>
+<text x="24" y="194" font-size="9" fill="#c9d1d9" xml:space="preserve">X   X    X    X        X                    XX</text>
+<text x="24" y="206" font-size="9" fill="#c9d1d9" xml:space="preserve">X    X   X    X        X                 XXX  XX</text>
+<text x="24" y="218" font-size="9" fill="#c9d1d9" xml:space="preserve">X    XXX      X        X               X  X X  X</text>
+<text x="24" y="230" font-size="9" fill="#c9d1d9" xml:space="preserve">X             X         X              XX X  XXXX</text>
+<text x="24" y="242" font-size="9" fill="#c9d1d9" xml:space="preserve"> X             X         XXXXXXXX\     XX   XX  X</text>
+<text x="24" y="254" font-size="9" fill="#c9d1d9" xml:space="preserve">  XX            XX              X     X    X  XX</text>
+<text x="24" y="266" font-size="9" fill="#c9d1d9" xml:space="preserve">    XX            XXXX   XXXXXX/     X     XXXX</text>
+<text x="24" y="278" font-size="9" fill="#c9d1d9" xml:space="preserve">      XXX             XX***         X     X</text>
+<text x="24" y="290" font-size="9" fill="#c9d1d9" xml:space="preserve">         XXXXXXXXXXXXX *   *       X     X</text>
+<text x="24" y="302" font-size="9" fill="#c9d1d9" xml:space="preserve">                      *---* X     X     X</text>
+<text x="24" y="314" font-size="9" fill="#c9d1d9" xml:space="preserve">                     *-* *   XXX X     X</text>
+<text x="24" y="326" font-size="9" fill="#c9d1d9" xml:space="preserve">                     *- *       XXX   X</text>
+<text x="24" y="338" font-size="9" fill="#c9d1d9" xml:space="preserve">                    *- *X          XXX</text>
+<text x="24" y="350" font-size="9" fill="#c9d1d9" xml:space="preserve">                    *- *X  X          XXX</text>
+<text x="24" y="362" font-size="9" fill="#c9d1d9" xml:space="preserve">                   *- *X    X            XX</text>
+<text x="24" y="374" font-size="9" fill="#c9d1d9" xml:space="preserve">                   *- *XX    X             X</text>
+<text x="24" y="386" font-size="9" fill="#c9d1d9" xml:space="preserve">                  *  *X* X    X             X</text>
+<text x="24" y="398" font-size="9" fill="#c9d1d9" xml:space="preserve">                  *  *X * X    X             X</text>
+<text x="24" y="410" font-size="9" fill="#c9d1d9" xml:space="preserve">                 *  * X**  X   XXXX          X</text>
+<text x="24" y="422" font-size="9" fill="#c9d1d9" xml:space="preserve">                 *  * X**  XX     X          X</text>
+<text x="24" y="434" font-size="9" fill="#c9d1d9" xml:space="preserve">                *  ** X** X     XX          X</text>
+<text x="24" y="446" font-size="9" fill="#c9d1d9" xml:space="preserve">                *  **  X*  XXX   X         X</text>
+<text x="24" y="458" font-size="9" fill="#c9d1d9" xml:space="preserve">               *  **    XX   XXXX       XXX</text>
+<text x="24" y="470" font-size="9" fill="#c9d1d9" xml:space="preserve">              *  * *      XXXX      X     X</text>
+<text x="24" y="482" font-size="9" fill="#c9d1d9" xml:space="preserve">             *   * *          X     X     X</text>
+<text x="24" y="494" font-size="9" fill="#c9d1d9" xml:space="preserve">=======*******   * *           X     X      XXXXXXXX\</text>
+<text x="24" y="506" font-size="9" fill="#c9d1d9" xml:space="preserve">      *         * *      /XXXXX      XXXXXXXX\      )</text>
+<text x="24" y="518" font-size="9" fill="#c9d1d9" xml:space="preserve"> =====**********  *     X                     )  \  )</text>
+<text x="24" y="530" font-size="9" fill="#c9d1d9" xml:space="preserve">   ====*         *     X               \  \   )XXXXX</text>
+<text x="24" y="542" font-size="9" fill="#c9d1d9" xml:space="preserve">=========**********       XXXXXXXXXXXXXXXXXXXXXX</text>
+<text x="354.2" y="34" fill="#c9d1d9" xml:space="preserve">DigitalEpidemic ----------------------------------------------------------------------</text>
+<text x="354.2" y="56" xml:space="preserve"><tspan fill="#ffa657">. Name:</tspan><tspan fill="#616e7f"> ............................................................... </tspan><tspan fill="#a5d6ff">Jeffrey Polasz</tspan></text>
+<text x="354.2" y="78" xml:space="preserve"><tspan fill="#ffa657">. Age:</tspan><tspan fill="#616e7f"> ............................................................................ </tspan><tspan fill="#a5d6ff">29</tspan></text>
+<text x="354.2" y="100" xml:space="preserve"><tspan fill="#ffa657">. Country:</tspan><tspan fill="#616e7f"> .................................................................... </tspan><tspan fill="#a5d6ff">Canada</tspan></text>
+<text x="354.2" y="144" fill="#c9d1d9" xml:space="preserve">- Career -----------------------------------------------------------------------------</text>
+<text x="354.2" y="166" xml:space="preserve"><tspan fill="#ffa657">. Work:</tspan><tspan fill="#616e7f"> ....................................................................... </tspan><tspan fill="#a5d6ff">Vehikl</tspan></text>
+<text x="354.2" y="188" xml:space="preserve"><tspan fill="#ffa657">. Title:</tspan><tspan fill="#616e7f"> ................................................. </tspan><tspan fill="#a5d6ff">Senior Full Stack Developer</tspan></text>
+<text x="354.2" y="232" fill="#c9d1d9" xml:space="preserve">- Favourites -------------------------------------------------------------------------</text>
+<text x="354.2" y="254" xml:space="preserve"><tspan fill="#ffa657">. Languages:</tspan><tspan fill="#616e7f"> ....................................... </tspan><tspan fill="#a5d6ff">TypeScript, C#, PHP, Python, Ruby</tspan></text>
+<text x="354.2" y="276" xml:space="preserve"><tspan fill="#ffa657">. Frameworks:</tspan><tspan fill="#616e7f"> ... </tspan><tspan fill="#a5d6ff">React, React Native, Next.js, Node.js, Express, .NET, Laravel, Rails</tspan></text>
+<text x="354.2" y="298" xml:space="preserve"><tspan fill="#ffa657">. Databases:</tspan><tspan fill="#616e7f"> ................ </tspan><tspan fill="#a5d6ff">PostgreSQL, SQL Server, Redis, MongoDB, Firebase, SQLite</tspan></text>
+<text x="354.2" y="320" xml:space="preserve"><tspan fill="#ffa657">. IDE:</tspan><tspan fill="#616e7f"> ................................................................ </tspan><tspan fill="#a5d6ff">VS Code, Rider</tspan></text>
+<text x="354.2" y="364" fill="#c9d1d9" xml:space="preserve">- Game Dev ---------------------------------------------------------------------------</text>
+<text x="354.2" y="386" xml:space="preserve"><tspan fill="#ffa657">. Engines:</tspan><tspan fill="#616e7f"> ...................................................... </tspan><tspan fill="#a5d6ff">Unity, Unreal Engine</tspan></text>
+<text x="354.2" y="408" xml:space="preserve"><tspan fill="#ffa657">. Platforms:</tspan><tspan fill="#616e7f"> ............................................................ </tspan><tspan fill="#a5d6ff">Android, iOS</tspan></text>
+<text x="354.2" y="430" xml:space="preserve"><tspan fill="#ffa657">. Shipped:</tspan><tspan fill="#616e7f"> ........................................................... </tspan><tspan fill="#a5d6ff">21 mobile games</tspan></text>
+<text x="354.2" y="474" fill="#c9d1d9" xml:space="preserve">- Contact ----------------------------------------------------------------------------</text>
+<text x="354.2" y="496" xml:space="preserve"><tspan fill="#ffa657">. Email:</tspan><tspan fill="#616e7f"> ..................................................... </tspan><tspan fill="#a5d6ff">jeff_polasz@hotmail.com</tspan></text>
+<text x="354.2" y="518" xml:space="preserve"><tspan fill="#ffa657">. LinkedIn:</tspan><tspan fill="#616e7f"> ....................................................... </tspan><tspan fill="#a5d6ff">/in/jeffrey-polasz</tspan></text>
+<text x="354.2" y="540" xml:space="preserve"><tspan fill="#ffa657">. Website:</tspan><tspan fill="#616e7f"> ............................................................ </tspan><tspan fill="#a5d6ff">jeffpolasz.com</tspan></text>
+</svg>
