@@ -6,6 +6,7 @@ whenever a field needs updating; there is no auto-refresh workflow.
 """
 
 import os
+import textwrap
 
 USERNAME = "DigitalEpidemic"
 FULL_NAME = "Jeffrey Polasz"
@@ -222,12 +223,8 @@ def render_art_svg(palette_name, font_size=ART_FONT_SIZE, right_gap=18):
     font_size - lets embedders resize via the <img> width attribute or by
     regenerating with a different font_size, independent of the info panel.
 
-    Draws its own divider line down the right edge (plus right_gap of blank
-    margin past it) so the art/text boundary is baked into the image instead
-    of coming from an HTML table border - a raw <table> gets GitHub's default
-    grid-line CSS applied to every cell, which is the "boxes around
-    everything" look we don't want; a floated <img> next to a <pre> avoids
-    <table> entirely and has no such border.
+    right_gap is blank margin on the right so the floated image doesn't butt
+    up directly against the text that wraps beside it.
     """
     p = PALETTES[palette_name]
     art = build_art()
@@ -236,15 +233,12 @@ def render_art_svg(palette_name, font_size=ART_FONT_SIZE, right_gap=18):
     pad = 4
     art_width = int(max(len(row) for row in art) * char_w)
     height = int(len(art) * line_height) + pad * 2
-    divider_x = pad + art_width + 8
-    width = divider_x + right_gap
+    width = pad + art_width + right_gap
 
     svg = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
         f'viewBox="0 0 {width} {height}" font-family="{FONT}" font-size="{font_size}">',
         FONT_STYLE,
-        f'<line x1="{divider_x}" y1="{pad}" x2="{divider_x}" y2="{height - pad}" '
-        f'stroke="{p["dots"]}" stroke-width="1"/>',
     ]
     for i, row in enumerate(art):
         y = pad + font_size + i * line_height
@@ -255,25 +249,45 @@ def render_art_svg(palette_name, font_size=ART_FONT_SIZE, right_gap=18):
     return "\n".join(svg)
 
 
+# Actual preview happens on this repo's own file-browser view (the special
+# "its README.md will appear on your profile" page), which shares width with
+# an About/Languages sidebar - narrower than the eventual public profile
+# page. Sized to what that narrower view can show without a horizontal
+# scrollbar on the <pre> block.
+README_LINE_LEN = 58
+
+
 def render_readme_snippet(lines):
     min_dots = 3
-    field_entries = [l for l in lines if l[0] == "field"]
-    content_min = max(len(f". {label}:") + 2 + min_dots + len(str(value)) for _, label, value in field_entries)
-    target_len = max(MIN_LINE_CHARS, content_min)
 
-    text_lines = [rule(USERNAME, target_len)]
+    text_lines = [rule(USERNAME, README_LINE_LEN)]
     for entry in lines:
         kind = entry[0]
         if kind == "blank":
             text_lines.append("")
         elif kind == "category":
-            text_lines.append(rule(f"- {entry[1]}", target_len))
+            text_lines.append(rule(f"- {entry[1]}", README_LINE_LEN))
         elif kind == "field":
             _, label, value = entry
+            value = str(value)
             prefix = f". {label}:"
-            dots_len = max(min_dots, target_len - len(prefix) - len(str(value)) - 2)
-            dots = "." * dots_len
-            text_lines.append(f"{prefix} {dots} {value}")
+            # Fill dots so the row lands on README_LINE_LEN for the classic
+            # long-dot-leader look - most fields are short enough for this.
+            # Only a value too long even for the minimum dot count falls
+            # back to wrapping onto aligned continuation lines, instead of
+            # forcing the whole block wider (which triggers the scrollbar).
+            dots_len = README_LINE_LEN - len(prefix) - len(value) - 2
+            if dots_len >= min_dots:
+                dots = "." * dots_len
+                text_lines.append(f"{prefix} {dots} {value}")
+            else:
+                dots = "." * min_dots
+                value_col = len(prefix) + 1 + min_dots + 1
+                wrap_width = max(10, README_LINE_LEN - value_col)
+                wrapped = textwrap.wrap(value, wrap_width) or [""]
+                text_lines.append(f"{prefix} {dots} {wrapped[0]}")
+                for cont in wrapped[1:]:
+                    text_lines.append(" " * value_col + cont)
 
     text_str = "\n".join(text_lines)
 
@@ -281,6 +295,8 @@ def render_readme_snippet(lines):
     # which only ends at the literal closing tag - unlike a <table>, it is
     # NOT terminated by blank lines, so the real blank spacer lines here are
     # safe (no zero-width-space workaround needed like the table version).
+    # <sub> is nested INSIDE <pre> (not wrapped around it) so the block still
+    # starts with the literal <pre> tag and keeps that blank-line immunity.
     return (
         "<picture>\n"
         '  <source media="(prefers-color-scheme: dark)" srcset="art_dark.svg">\n'
@@ -288,7 +304,9 @@ def render_readme_snippet(lines):
         "</picture>\n"
         "\n"
         "<pre>\n"
+        "<sub>\n"
         f"{esc(text_str)}\n"
+        "</sub>\n"
         "</pre>\n"
     )
 
