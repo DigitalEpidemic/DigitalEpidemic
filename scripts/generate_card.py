@@ -110,6 +110,8 @@ PALETTES = {
     },
 }
 
+ART_FONT_SIZE = 9
+
 FONT = "ConsolasFallback,Consolas,monospace"
 FONT_STYLE = (
     "<style>@font-face {"
@@ -146,7 +148,7 @@ def render_svg(lines, palette_name):
     left = 24
 
     art = build_art()
-    art_font_size = 9
+    art_font_size = ART_FONT_SIZE
     art_char_w = art_font_size * 0.6
     art_line_height = art_font_size + 3
     art_width_chars = max(len(row) for row in art)
@@ -154,10 +156,6 @@ def render_svg(lines, palette_name):
     divider_x = art_x + art_width_chars * art_char_w + 20
     info_x = divider_x + 24
 
-    # Dots are sized so every value's *right* edge lands on the same column
-    # as the header/category rules - not just far enough to clear the
-    # longest label. The shared line width grows past MIN_LINE_CHARS if any
-    # field's own content needs more room, so nothing ever clips.
     field_entries = [l for l in lines if l[0] == "field"]
     min_dots = 3
     content_min = max(len(f". {label}:") + 2 + min_dots + len(str(value)) for _, label, value in field_entries)
@@ -219,15 +217,122 @@ def render_svg(lines, palette_name):
     return "\n".join(svg)
 
 
+def render_art_svg(palette_name, font_size=ART_FONT_SIZE):
+    """Standalone art-only SVG, transparent background, sized purely from
+    font_size - lets embedders resize via the <img> width attribute or by
+    regenerating with a different font_size, independent of the info panel.
+    """
+    p = PALETTES[palette_name]
+    art = build_art()
+    char_w = font_size * 0.6
+    line_height = font_size + 3
+    pad = 4
+    width = int(max(len(row) for row in art) * char_w) + pad * 2
+    height = int(len(art) * line_height) + pad * 2
+
+    svg = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
+        f'viewBox="0 0 {width} {height}" font-family="{FONT}" font-size="{font_size}">',
+        FONT_STYLE,
+    ]
+    for i, row in enumerate(art):
+        y = pad + font_size + i * line_height
+        svg.append(
+            f'<text x="{pad}" y="{y}" fill="{p["name"]}" xml:space="preserve">{esc(row)}</text>'
+        )
+    svg.append("</svg>")
+    return "\n".join(svg)
+
+
+def render_html_snippet(lines):
+    # Calculate the required line length using your exact logic
+    min_dots = 3
+    field_entries = [l for l in lines if l[0] == "field"]
+    content_min = max(len(f". {label}:") + 2 + min_dots + len(str(value)) for _, label, value in field_entries)
+    target_len = max(MIN_LINE_CHARS, content_min)
+    
+    # Build the right-side text block
+    right_lines = []
+    right_lines.append(rule(USERNAME, target_len))
+    
+    for entry in lines:
+        kind = entry[0]
+        if kind == "blank":
+            # A truly empty line here would be a CommonMark "blank line",
+            # which terminates the raw HTML block early and causes GitHub to
+            # markdown-parse everything after it (e.g. "- Category" becomes
+            # a bullet list). A zero-width space keeps the line non-blank
+            # while staying invisible.
+            right_lines.append("​")
+        elif kind == "category":
+            right_lines.append(rule(f"- {entry[1]}", target_len))
+        elif kind == "field":
+            _, label, value = entry
+            prefix = f". {label}:"
+            dots_len = max(min_dots, target_len - len(prefix) - len(str(value)) - 2)
+            dots = "." * dots_len
+            right_lines.append(f"{prefix} {dots} {value}")
+            
+    right_str = "\n".join(right_lines)
+    
+    # Construct the final HTML table
+    # Wrapped in <sub> to render smaller by default - GitHub strips inline
+    # `style` attributes from README HTML, so <sub> is the only reliable way
+    # to shrink the text (uniform scaling keeps the monospace alignment intact).
+    # The art is an embedded SVG rather than <pre> text so it can be resized
+    # freely (e.g. add width="..." to the <img>) without touching font size.
+    html = (
+        "<sub>\n"
+        "<table>\n"
+        "  <tr>\n"
+        '    <td valign="top">\n'
+        "<picture>\n"
+        f'  <source media="(prefers-color-scheme: dark)" srcset="art_dark.svg">\n'
+        f'  <img src="art_light.svg" alt="{esc(USERNAME)} ascii art">\n'
+        "</picture>\n"
+        "    </td>\n"
+        '    <td valign="middle">\n'
+        "<pre>\n"
+        f"{esc(right_str)}\n"
+        "</pre>\n"
+        "    </td>\n"
+        "  </tr>\n"
+        "</table>\n"
+        "</sub>"
+    )
+    return html
+
+
 def main():
     lines = build_lines()
     repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    
+    # Generate SVGs
     for theme in ("dark", "light"):
         svg = render_svg(lines, theme)
         out_path = os.path.join(repo_root, f"{theme}_mode.svg")
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(svg)
         print(f"wrote {out_path}")
+
+        art_svg = render_art_svg(theme)
+        art_out_path = os.path.join(repo_root, f"art_{theme}.svg")
+        with open(art_out_path, "w", encoding="utf-8") as f:
+            f.write(art_svg)
+        print(f"wrote {art_out_path}")
+
+    # Generate copyable HTML snippet (for local preview) and the README
+    # GitHub actually renders on the profile.
+    html_snippet = render_html_snippet(lines)
+    html_out_path = os.path.join(repo_root, "profile_snippet.html")
+    with open(html_out_path, "w", encoding="utf-8") as f:
+        f.write(html_snippet)
+    print(f"wrote {html_out_path}")
+
+    readme_path = os.path.join(repo_root, "README.md")
+    with open(readme_path, "w", encoding="utf-8") as f:
+        f.write(html_snippet + "\n")
+    print(f"wrote {readme_path}")
 
 
 if __name__ == "__main__":
