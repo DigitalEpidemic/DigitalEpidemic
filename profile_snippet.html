@@ -1,40 +1,31 @@
-<sub>
-<table>
-  <tr>
-    <td valign="top">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="art_dark.svg">
-  <img src="art_light.svg" alt="DigitalEpidemic ascii art">
+  <img src="art_light.svg" align="left" alt="DigitalEpidemic ascii art">
 </picture>
-    </td>
-    <td valign="middle">
+
 <pre>
 DigitalEpidemic ----------------------------------------------------------------------
 . Name: ............................................................... Jeffrey Polasz
 . Age: ............................................................................ 29
 . Country: .................................................................... Canada
-​
+
 - Career -----------------------------------------------------------------------------
 . Work: ....................................................................... Vehikl
 . Title: ................................................. Senior Full Stack Developer
-​
+
 - Favourites -------------------------------------------------------------------------
 . Languages: ....................................... TypeScript, C#, PHP, Python, Ruby
 . Frameworks: ... React, React Native, Next.js, Node.js, Express, .NET, Laravel, Rails
 . Databases: ................ PostgreSQL, SQL Server, Redis, MongoDB, Firebase, SQLite
 . IDE: ................................................................ VS Code, Rider
-​
+
 - Game Dev ---------------------------------------------------------------------------
 . Engines: ...................................................... Unity, Unreal Engine
 . Platforms: ............................................................ Android, iOS
 . Shipped: ........................................................... 21 mobile games
-​
+
 - Contact ----------------------------------------------------------------------------
 . Email: ..................................................... jeff_polasz@hotmail.com
 . LinkedIn: ....................................................... /in/jeffrey-polasz
 . Website: ............................................................ jeffpolasz.com
 </pre>
-    </td>
-  </tr>
-</table>
-</sub>

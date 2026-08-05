@@ -217,23 +217,34 @@ def render_svg(lines, palette_name):
     return "\n".join(svg)
 
 
-def render_art_svg(palette_name, font_size=ART_FONT_SIZE):
+def render_art_svg(palette_name, font_size=ART_FONT_SIZE, right_gap=18):
     """Standalone art-only SVG, transparent background, sized purely from
     font_size - lets embedders resize via the <img> width attribute or by
     regenerating with a different font_size, independent of the info panel.
+
+    Draws its own divider line down the right edge (plus right_gap of blank
+    margin past it) so the art/text boundary is baked into the image instead
+    of coming from an HTML table border - a raw <table> gets GitHub's default
+    grid-line CSS applied to every cell, which is the "boxes around
+    everything" look we don't want; a floated <img> next to a <pre> avoids
+    <table> entirely and has no such border.
     """
     p = PALETTES[palette_name]
     art = build_art()
     char_w = font_size * 0.6
     line_height = font_size + 3
     pad = 4
-    width = int(max(len(row) for row in art) * char_w) + pad * 2
+    art_width = int(max(len(row) for row in art) * char_w)
     height = int(len(art) * line_height) + pad * 2
+    divider_x = pad + art_width + 8
+    width = divider_x + right_gap
 
     svg = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
         f'viewBox="0 0 {width} {height}" font-family="{FONT}" font-size="{font_size}">',
         FONT_STYLE,
+        f'<line x1="{divider_x}" y1="{pad}" x2="{divider_x}" y2="{height - pad}" '
+        f'stroke="{p["dots"]}" stroke-width="1"/>',
     ]
     for i, row in enumerate(art):
         y = pad + font_size + i * line_height
@@ -244,63 +255,42 @@ def render_art_svg(palette_name, font_size=ART_FONT_SIZE):
     return "\n".join(svg)
 
 
-def render_html_snippet(lines):
-    # Calculate the required line length using your exact logic
+def render_readme_snippet(lines):
     min_dots = 3
     field_entries = [l for l in lines if l[0] == "field"]
     content_min = max(len(f". {label}:") + 2 + min_dots + len(str(value)) for _, label, value in field_entries)
     target_len = max(MIN_LINE_CHARS, content_min)
-    
-    # Build the right-side text block
-    right_lines = []
-    right_lines.append(rule(USERNAME, target_len))
-    
+
+    text_lines = [rule(USERNAME, target_len)]
     for entry in lines:
         kind = entry[0]
         if kind == "blank":
-            # A truly empty line here would be a CommonMark "blank line",
-            # which terminates the raw HTML block early and causes GitHub to
-            # markdown-parse everything after it (e.g. "- Category" becomes
-            # a bullet list). A zero-width space keeps the line non-blank
-            # while staying invisible.
-            right_lines.append("​")
+            text_lines.append("")
         elif kind == "category":
-            right_lines.append(rule(f"- {entry[1]}", target_len))
+            text_lines.append(rule(f"- {entry[1]}", target_len))
         elif kind == "field":
             _, label, value = entry
             prefix = f". {label}:"
             dots_len = max(min_dots, target_len - len(prefix) - len(str(value)) - 2)
             dots = "." * dots_len
-            right_lines.append(f"{prefix} {dots} {value}")
-            
-    right_str = "\n".join(right_lines)
-    
-    # Construct the final HTML table
-    # Wrapped in <sub> to render smaller by default - GitHub strips inline
-    # `style` attributes from README HTML, so <sub> is the only reliable way
-    # to shrink the text (uniform scaling keeps the monospace alignment intact).
-    # The art is an embedded SVG rather than <pre> text so it can be resized
-    # freely (e.g. add width="..." to the <img>) without touching font size.
-    html = (
-        "<sub>\n"
-        "<table>\n"
-        "  <tr>\n"
-        '    <td valign="top">\n'
+            text_lines.append(f"{prefix} {dots} {value}")
+
+    text_str = "\n".join(text_lines)
+
+    # A standalone <pre>...</pre> is a CommonMark "type 1" raw HTML block,
+    # which only ends at the literal closing tag - unlike a <table>, it is
+    # NOT terminated by blank lines, so the real blank spacer lines here are
+    # safe (no zero-width-space workaround needed like the table version).
+    return (
         "<picture>\n"
-        f'  <source media="(prefers-color-scheme: dark)" srcset="art_dark.svg">\n'
-        f'  <img src="art_light.svg" alt="{esc(USERNAME)} ascii art">\n'
+        '  <source media="(prefers-color-scheme: dark)" srcset="art_dark.svg">\n'
+        f'  <img src="art_light.svg" align="left" alt="{esc(USERNAME)} ascii art">\n'
         "</picture>\n"
-        "    </td>\n"
-        '    <td valign="middle">\n'
+        "\n"
         "<pre>\n"
-        f"{esc(right_str)}\n"
+        f"{esc(text_str)}\n"
         "</pre>\n"
-        "    </td>\n"
-        "  </tr>\n"
-        "</table>\n"
-        "</sub>"
     )
-    return html
 
 
 def main():
@@ -323,15 +313,15 @@ def main():
 
     # Generate copyable HTML snippet (for local preview) and the README
     # GitHub actually renders on the profile.
-    html_snippet = render_html_snippet(lines)
+    readme_content = render_readme_snippet(lines)
     html_out_path = os.path.join(repo_root, "profile_snippet.html")
     with open(html_out_path, "w", encoding="utf-8") as f:
-        f.write(html_snippet)
+        f.write(readme_content)
     print(f"wrote {html_out_path}")
 
     readme_path = os.path.join(repo_root, "README.md")
     with open(readme_path, "w", encoding="utf-8") as f:
-        f.write(html_snippet + "\n")
+        f.write(readme_content)
     print(f"wrote {readme_path}")
 
 

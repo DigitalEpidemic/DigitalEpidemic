@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="294" height="536" viewBox="0 0 294 536" font-family="ConsolasFallback,Consolas,monospace" font-size="9">
+<svg xmlns="http://www.w3.org/2000/svg" width="316" height="536" viewBox="0 0 316 536" font-family="ConsolasFallback,Consolas,monospace" font-size="9">
 <style>@font-face {src: local('Consolas'), local('Consolas Bold');font-family: 'ConsolasFallback';font-display: swap;-webkit-size-adjust: 109%;size-adjust: 109%;}</style>
+<line x1="298" y1="4" x2="298" y2="532" stroke="#616e7f" stroke-width="1"/>
 <text x="4" y="13" fill="#c9d1d9" xml:space="preserve">            XXXX</text>
 <text x="4" y="25" fill="#c9d1d9" xml:space="preserve">           X    XX</text>
 <text x="4" y="37" fill="#c9d1d9" xml:space="preserve">          X  ***  X                XXXXX</text>
